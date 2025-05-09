@@ -34,7 +34,7 @@ export default function Page() {
 
   useEffect(() => {
     if (isStreaming) {
-      const socket = io("http://localhost:3001")
+      const socket = io("http://localhost:4443")
       socketRef.current = socket
 
       socket.on("connect", () => console.log(`Socket connected: ${socket.id}!`))
