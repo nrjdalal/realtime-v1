@@ -14,7 +14,7 @@ npm rebuild mediasoup
 pnpm run dev
 ```
 
-- Visit `http://localhost:3000/stream` to start streaming.
+- Visit `http://localhost:3000/stream` to start the stream.
 - Visit `http://localhost:3000/watch` (yet to be implemented) to watch the stream.
 
 > [!NOTE]
