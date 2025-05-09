@@ -1,7 +1,10 @@
-import http from "http"
-import { createWorker, router } from "@/mediasoup"
+import http from "node:http"
+
 import express from "express"
 import { Server } from "socket.io"
+
+import config from "@/config"
+import { createWorker, router } from "@/mediasoup"
 
 const app = express()
 const server = http.createServer(app)
@@ -22,7 +25,7 @@ io.on("connection", (socket) => {
 
     try {
       const transport = await router.createWebRtcTransport({
-        listenIps: [{ ip: "0.0.0.0", announcedIp: undefined }],
+        listenIps: config.mediasoup.webRtcTransport.listenInfos,
         enableUdp: true,
         enableTcp: true,
         preferUdp: true,
@@ -51,7 +54,7 @@ io.on("connection", (socket) => {
   })
 })
 
-const PORT = process.env.PORT || 3001
+const PORT = config.https.listenPort
 
 server.listen(PORT, async () => {
   await createWorker()
