@@ -45,6 +45,7 @@
     "plugins": [
       "@ianvs/prettier-plugin-sort-imports"
     ],
+    "printWidth": 100,
     "semi": false
   },
   "dependencies": {

@@ -1,10 +1,11 @@
 import http from "node:http"
 
 import express from "express"
+import { Router } from "mediasoup/types"
 import { Server } from "socket.io"
 
 import config from "@/config"
-import { createWorker, router } from "@/mediasoup"
+import { createWorker } from "@/mediasoup"
 
 const app = express()
 const server = http.createServer(app)
@@ -18,8 +19,13 @@ app.get("/", (_, res) => {
   res.json({ message: "Streaming server is up!" })
 })
 
-io.on("connection", (socket) => {
+let router: Router
+
+io.on("connection", async (socket) => {
+  router = await createWorker()
+
   console.log(`Client connected: ${socket.id}!`)
+
   socket.on("handshake", async (data) => {
     console.log("Received handshake request:", data)
 
@@ -57,6 +63,5 @@ io.on("connection", (socket) => {
 const PORT = config.https.listenPort
 
 server.listen(PORT, async () => {
-  await createWorker()
   console.log(`Server listening on port http://localhost:${PORT}`)
 })
